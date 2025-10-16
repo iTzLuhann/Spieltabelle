@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabellenrechner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+   <div><label for="spielerzahl">Wie viele Spieler?</label>
+   <input id="spielerzahl" type="number" min="2" max="20" maxlength="2">
+    </div>
+
+   <div><label for="spielanzahl">Wie viele Spiele werden gespielt?</label>
+   <input id="spielanzahl" type="number" min="1" max="20" maxlength="2">
+   </div>
+
+   <button id="createTable">Tabelle erstellen</button>
+   <table id="tableContainer"></table>
+
+  <script src="script.js"></script>
+</body>
+</html>

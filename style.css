@@ -1,0 +1,67 @@
+/* Globale Stile und Hintergrund */
+body {
+    background-color: #2F3640; /* Anthrazit-Farbton */
+    color: #f4f4f4; /* Helle Textfarbe für guten Kontrast */
+    font-family: sans-serif;
+    padding: 20px;
+}
+
+/* Stil für die Eingabefelder und den Button */
+div, button {
+    margin-bottom: 15px; /* Etwas Abstand zwischen den Elementen */
+}
+
+input[type="number"], button {
+    background-color: #353b48; /* Etwas helleres Anthrazit */
+    color: #f4f4f4;
+    border: 1px solid #ff00ff; /* Neon-Magenta-Rand */
+    padding: 8px;
+    border-radius: 5px; /* Leicht abgerundete Ecken */
+}
+
+button {
+    cursor: pointer; /* Zeigt an, dass der Button klickbar ist */
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #ff00ff; /* Magenta-Hintergrund beim Darüberfahren */
+    color: #2F3640; /* Dunkler Text beim Hover */
+}
+
+/* Stil für die Tabelle */
+table {
+    width: 100%;
+    border-collapse: separate; /* Wichtig für abgerundete Ecken */
+    border-spacing: 0;
+    margin-top: 20px;
+    border: 3px solid #ff00ff; /* Dicker Neon-Magenta-Rahmen */
+    border-radius: 15px; /* Abgerundete Ecken für die gesamte Tabelle */
+    overflow: hidden; /* Stellt sicher, dass die Ecken der Zellen nicht über den Rahmen hinausragen */
+}
+
+/* Stil für Kopf- und Datenzellen */
+th, td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #8c008c; /* Dunkleres Magenta für die Trennlinien */
+    border-right: 1px solid #8c008c;
+}
+
+/* Entfernt den überflüssigen rechten Rand bei der letzten Spalte */
+th:last-child,
+td:last-child {
+    border-right: none;
+}
+
+/* Entfernt den überflüssigen unteren Rand bei der letzten Zeile */
+tr:last-child td {
+    border-bottom: none;
+}
+
+/* Stil für die dicken Kopfzellen */
+th {
+    background-color: #530053; /* Dunkler Magenta-Ton für den Kopf */
+    color: #ffffff;
+    font-weight: bold;
+}
