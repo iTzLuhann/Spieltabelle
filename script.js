@@ -1,5 +1,7 @@
 const erstelleBtn = document.getElementById('createTable');
 const meineTabelle = document.getElementById('tableContainer');
+const addSpalteBtn = document.getElementById('addspalte');
+const addZeileBtn = document.getElementById('addzeile');
 
 function tabelleErstellen() {
     const spielerInput = document.getElementById('spielerzahl');
@@ -78,3 +80,77 @@ meineTabelle.addEventListener('input', function(event) {
         gesamtZelle.textContent = summe;
     }
 });
+
+// Event Listener für das Hinzufügen einer neuen Spalte
+function spalteHinzufuegen() {
+    const thead = meineTabelle.querySelector('thead');
+    const tbody = meineTabelle.querySelector('tbody');
+
+    //prüft ob die Tabelle existiert
+    if (!thead || !tbody) {
+        alert("Bitte erstelle zuerst eine Tabelle.");
+        return;
+    }
+    const kopfzeile = thead.querySelector('tr');
+
+    //findet 'Gesamt' Zelle und fügt neue Spalte davor ein
+    const thGesamt = kopfzeile.lastElementChild;
+
+    // berechnet die neue Spaltennummer
+    const neueSpaltenNummer = kopfzeile.children.length - 1;
+
+    let neuerTh = document.createElement('th');
+    neuerTh.textContent = 'Spiel ' + (neueSpaltenNummer);
+    neuerTh.contentEditable = 'true';
+    kopfzeile.insertBefore(neuerTh, thGesamt);
+
+    //Neue Datenzellen für jede Spielerzeile hinzufügen
+    const spielerZeilen = tbody.querySelectorAll('tr');
+
+    spielerZeilen.forEach(zeile => {
+        const gesamtZelle = zeile.lastElementChild;
+
+        const gesamtZelleIndex = gesamtZelle.cellIndex;
+
+        let neuePunktZelle = zeile.insertCell(gesamtZelleIndex);
+        neuePunktZelle.contentEditable = 'true';
+        neuePunktZelle.className = 'punkt-zelle';
+    })
+}
+addSpalteBtn.addEventListener('click', spalteHinzufuegen);
+
+// Event Listener für das Hinzufügen einer neuen Zeile
+
+function zeileHinzufuegen() {
+    const tbody = meineTabelle.querySelector('tbody');
+    const thead = meineTabelle.querySelector('thead');
+
+    //prüft ob die Tabelle existiert
+    if (!thead || !tbody) {
+        alert("Bitte erstelle zuerst eine Tabelle.");
+        return;
+    }
+    const kopfzeile = thead.querySelector('tr');
+    const anzahlSpalten = kopfzeile.cells.length;
+    const anzahlSpielSpalten = anzahlSpalten - 2; // Abzüglich 'Spieler' und 'Gesamt'
+
+    let neueZeile = tbody.insertRow();
+
+    const SpielerNummer = tbody.rows.length;
+
+    let nameZelle = neueZeile.insertCell();
+    nameZelle.textContent = 'Spieler ' + SpielerNummer;
+    nameZelle.contentEditable = 'true';
+
+    for (let i = 0; i < anzahlSpielSpalten; i++) {
+        let punktZelle = neueZeile.insertCell();
+        punktZelle.contentEditable = 'true';
+        punktZelle.className = 'punkt-zelle';
+    }
+
+    let gesamtZelle = neueZeile.insertCell();
+    gesamtZelle.textContent = '0';
+    gesamtZelle.className = 'gesamt-zelle';
+
+}
+addZeileBtn.addEventListener('click', zeileHinzufuegen);
