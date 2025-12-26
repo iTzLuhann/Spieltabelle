@@ -1,4 +1,4 @@
-/* style.css - Complete Updated Version */
+/* style.css - Scroll Fix, Neon Design & Mobile Scrollbar Fix */
 
 body, html {
     margin: 0; padding: 0;
@@ -6,20 +6,20 @@ body, html {
     height: 100%; box-sizing: border-box;
     background-color: #1e1e24;
     color: #ffffff;
-    overflow: hidden; 
+    overflow: hidden; /* Scrollen auf dem Body verhindern, wir scrollen in den Containern */
 }
 
 .app-container { display: flex; height: 100vh; width: 100%; }
 
-/* --- SIDEBAR --- */
+/* --- SIDEBAR (DESKTOP) --- */
 .sidebar {
     width: 360px; min-width: 360px;
     background-color: #4a148c; 
     height: 100%;
     display: block; 
-    overflow-y: auto; 
+    overflow-y: auto; /* Hier erlaubt es Scrollen am Desktop */
     padding: 20px;
-    padding-bottom: 200px;
+    padding-bottom: 200px; /* Platz unten */
     border-right: 2px solid #7c43bd;
     transition: margin-left 0.3s ease;
     box-sizing: border-box;
@@ -58,7 +58,7 @@ button:hover { background: #9c27b0; filter: brightness(1.1); }
 .preset-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .preset-grid button { width: 100%; }
 
-/* Config Bereiche (Standardmäßig ausgeblendet) */
+/* Config Bereiche */
 #darts-config, #minigolf-config, #badminton-config { 
     display: none; 
     margin-top: 20px; 
@@ -117,7 +117,6 @@ button:hover { background: #9c27b0; filter: brightness(1.1); }
 
 /* --- CONTENT AREA --- */
 .content { flex: 1; padding: 30px; overflow-y: auto; background-color: #282c34; }
-/* Standard Toggle Btn (Desktop) */
 .toggle-btn { 
     background: transparent; border: 2px solid #ea80fc; color: #ea80fc; 
     font-size: 1.2rem; margin-bottom: 20px; padding: 5px 15px; width: auto;
@@ -165,7 +164,6 @@ td[contenteditable="true"]:focus, .wurf-zelle:focus {
     background-color: #4a148c;
     border-right: 2px solid #bd00ff;
 }
-/* Input Felder (Regler) */
 .badminton-input {
     width: 100%; height: 100%;
     background: transparent; 
@@ -187,23 +185,22 @@ td[contenteditable="true"]:focus, .wurf-zelle:focus {
 ::-webkit-scrollbar-thumb { background-color: #7b1fa2; border-radius: 5px; border: 2px solid #4a148c; }
 
 
-/* --- MOBILE REPARATUR (FINAL) --- */
+/* --- MOBILE REPARATUR (FINAL & SCROLLBAR FIX) --- */
 @media (max-width: 768px) {
     
-    /* Container blockiert nichts */
     .app-container {
         display: block;
         position: relative;
         overflow-x: hidden;
     }
 
-    /* Der Menü-Button: Fixiert rechts oben */
+    /* Der Menü-Button */
     .toggle-btn {
         position: fixed;
         top: 15px;
         right: 15px;
-        z-index: 20000 !important; /* Muss höher sein als Sidebar */
-        background-color: #ea80fc; /* Auffällige Farbe */
+        z-index: 20000 !important; 
+        background-color: #ea80fc; 
         color: #1e1e24;
         border: 2px solid #ffffff;
         border-radius: 50%;
@@ -219,26 +216,28 @@ td[contenteditable="true"]:focus, .wurf-zelle:focus {
         margin: 0;
     }
 
-    /* Die Sidebar: Schwebt über allem */
+    /* Die Sidebar: Schwebt & ist SCROLLBAR */
     .sidebar {
         position: fixed;
         top: 0;
         left: 0;
-        height: 100vh;
-        width: 85% !important; /* Breite auf Handy */
-        min-width: 0 !important; /* Desktop-Regel überschreiben */
+        height: 100vh; /* Volle Höhe */
+        width: 85% !important;
+        min-width: 0 !important;
         max-width: 320px;
-        z-index: 10000 !important; /* Sehr hoch, aber unter dem Button */
+        z-index: 10000 !important;
         background-color: #4a148c;
         box-shadow: 10px 0 30px rgba(0,0,0,0.8);
         
-        /* Animation */
         transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-        transform: translateX(0); /* Standard: Sichtbar */
-        
-        /* WICHTIG: Damit Klicks funktionieren */
+        transform: translateX(0); 
         pointer-events: auto; 
         margin-left: 0 !important;
+
+        /* --- HIER IST DER FIX FÜRS SCROLLEN --- */
+        overflow-y: auto !important; /* Scrollen erzwingen */
+        -webkit-overflow-scrolling: touch; /* Weiches Scrollen auf iPhone */
+        padding-bottom: 150px; /* Genug Platz unten lassen, damit man den Start-Button erreicht */
     }
 
     /* Wenn zugeklappt */
@@ -248,14 +247,12 @@ td[contenteditable="true"]:focus, .wurf-zelle:focus {
         margin-left: 0 !important;
     }
 
-    /* Der Inhalt */
     .content {
         width: 100%;
-        padding: 80px 15px 100px 15px; /* Platz für Button oben lassen */
+        padding: 80px 15px 100px 15px; 
         pointer-events: auto;
     }
     
-    /* Macht Buttons auf Handy besser tippbar */
     button, input, .accordion {
         touch-action: manipulation;
     }
