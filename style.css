@@ -1,12 +1,10 @@
-/* style.css - Scroll Fix, Neon Design & Mobile Scrollbar Fix */
-
 body, html {
     margin: 0; padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     height: 100%; box-sizing: border-box;
     background-color: #1e1e24;
     color: #ffffff;
-    overflow: hidden; /* Scrollen auf dem Body verhindern, wir scrollen in den Containern */
+    overflow: hidden;
 }
 
 .app-container { display: flex; height: 100vh; width: 100%; }
@@ -17,9 +15,9 @@ body, html {
     background-color: #4a148c; 
     height: 100%;
     display: block; 
-    overflow-y: auto; /* Hier erlaubt es Scrollen am Desktop */
+    overflow-y: auto; 
     padding: 20px;
-    padding-bottom: 200px; /* Platz unten */
+    padding-bottom: 200px; 
     border-right: 2px solid #7c43bd;
     transition: margin-left 0.3s ease;
     box-sizing: border-box;
@@ -185,7 +183,6 @@ td[contenteditable="true"]:focus, .wurf-zelle:focus {
 ::-webkit-scrollbar-thumb { background-color: #7b1fa2; border-radius: 5px; border: 2px solid #4a148c; }
 
 
-/* --- MOBILE REPARATUR (FINAL & SCROLLBAR FIX) --- */
 @media (max-width: 768px) {
     
     .app-container {
@@ -216,12 +213,15 @@ td[contenteditable="true"]:focus, .wurf-zelle:focus {
         margin: 0;
     }
 
-    /* Die Sidebar: Schwebt & ist SCROLLBAR */
     .sidebar {
         position: fixed;
         top: 0;
         left: 0;
-        height: 100vh; /* Volle Höhe */
+        bottom: 0;
+        
+        height: 100dvh; 
+        min-height: 100%;
+        
         width: 85% !important;
         min-width: 0 !important;
         max-width: 320px;
@@ -234,13 +234,13 @@ td[contenteditable="true"]:focus, .wurf-zelle:focus {
         pointer-events: auto; 
         margin-left: 0 !important;
 
-        /* --- HIER IST DER FIX FÜRS SCROLLEN --- */
-        overflow-y: auto !important; /* Scrollen erzwingen */
-        -webkit-overflow-scrolling: touch; /* Weiches Scrollen auf iPhone */
-        padding-bottom: 150px; /* Genug Platz unten lassen, damit man den Start-Button erreicht */
+        /* --- SCROLLING FIX --- */
+        overflow-y: scroll !important;
+        -webkit-overflow-scrolling: touch; 
+        
+        padding-bottom: 150px !important; 
     }
 
-    /* Wenn zugeklappt */
     .sidebar.collapsed {
         transform: translateX(-100%);
         box-shadow: none;
