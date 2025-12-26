@@ -181,7 +181,43 @@ td[contenteditable="true"]:focus, .wurf-zelle:focus {
 ::-webkit-scrollbar { width: 10px; }
 ::-webkit-scrollbar-track { background: #4a148c; }
 ::-webkit-scrollbar-thumb { background-color: #7b1fa2; border-radius: 5px; border: 2px solid #4a148c; }
+/* Responsive Design (Handy-Anpassung) */
 @media (max-width: 768px) {
-    .sidebar { width: 280px; min-width: 280px; }
-    .sidebar.collapsed { margin-left: -280px; }
+    .app-container {
+        position: relative; /* Wichtig für das Overlay */
+        overflow-x: hidden; /* Verhindert seitliches Scrollen */
+    }
+
+    .sidebar {
+        position: absolute; /* Menü schwebt über dem Inhalt */
+        left: 0;
+        top: 0;
+        height: 100vh; /* Volle Höhe */
+        width: 85%; /* Deckt fast den ganzen Screen ab, aber man sieht noch Rand */
+        max-width: 320px;
+        z-index: 1000; /* Ganz weit vorne */
+        box-shadow: 5px 0 15px rgba(0,0,0,0.5); /* Schatten, damit es sich abhebt */
+    }
+
+    /* Wenn eingeklappt, schieben wir es komplett nach links raus */
+    .sidebar.collapsed {
+        margin-left: -100%; 
+    }
+
+    /* Der Button "Menü" soll immer sichtbar und gut klickbar sein */
+    .toggle-btn {
+        position: sticky;
+        top: 10px;
+        left: 10px;
+        z-index: 500;
+        background-color: #1e1e24; /* Hintergrund, damit man Text lesen kann */
+        border-radius: 4px;
+        margin-left: 0;
+        margin-top: 10px;
+    }
+    
+    .content {
+        padding: 15px; /* Etwas weniger Abstand auf Handy */
+        width: 100%; /* Nutzt jetzt den vollen Platz */
+    }
 }
