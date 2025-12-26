@@ -654,23 +654,30 @@ document.addEventListener('DOMContentLoaded', function() {
         neueWurfZeile(tbody, sAnz);
         if(advancedStatsCheckbox.checked) updateHeaderStats(); 
     }
-    // --- MOBILE OPTIMIERUNGEN ---
+  // --- MOBILE OPTIMIERUNGEN (Final Fix) ---
     
-    // 1. Beim Start auf Handy: Menü automatisch zuklappen
-    if(window.innerWidth <= 768) {
-        sidebar.classList.add('collapsed');
+    function checkMobileMenu() {
+        if(window.innerWidth <= 768) {
+            // Auf Handy: Klasse 'collapsed' hinzufügen, damit es zu ist
+            sidebar.classList.add('collapsed');
+        } else {
+            // Auf Desktop: Klasse entfernen, damit es offen ist
+            sidebar.classList.remove('collapsed');
+        }
     }
 
-    // 2. Funktion zum automatischen Schließen auf Handy
+    // Beim Laden der Seite prüfen
+    checkMobileMenu();
+
+    // Funktion zum Schließen nach Klick (für die Buttons)
     function autoCloseSidebarOnMobile() {
         if(window.innerWidth <= 768) {
             sidebar.classList.add('collapsed');
         }
     }
 
-    // 3. Buttons verknüpfen: Wenn man "Tabelle erstellen" klickt, Menü zu!
+    // Buttons verknüpfen
     if(erstelleBtn) erstelleBtn.addEventListener('click', autoCloseSidebarOnMobile);
     if(startDartsBtn) startDartsBtn.addEventListener('click', autoCloseSidebarOnMobile);
     if(startMinigolfBtn) startMinigolfBtn.addEventListener('click', autoCloseSidebarOnMobile);
     if(startBadmintonBtn) startBadmintonBtn.addEventListener('click', autoCloseSidebarOnMobile);
-});

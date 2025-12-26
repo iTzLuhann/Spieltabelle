@@ -182,42 +182,61 @@ td[contenteditable="true"]:focus, .wurf-zelle:focus {
 ::-webkit-scrollbar-track { background: #4a148c; }
 ::-webkit-scrollbar-thumb { background-color: #7b1fa2; border-radius: 5px; border: 2px solid #4a148c; }
 /* Responsive Design (Handy-Anpassung) */
+/* --- MOBILE REPARATUR --- */
 @media (max-width: 768px) {
-    .app-container {
-        position: relative; /* Wichtig für das Overlay */
-        overflow-x: hidden; /* Verhindert seitliches Scrollen */
-    }
-
-    .sidebar {
-        position: absolute; /* Menü schwebt über dem Inhalt */
-        left: 0;
-        top: 0;
-        height: 100vh; /* Volle Höhe */
-        width: 85%; /* Deckt fast den ganzen Screen ab, aber man sieht noch Rand */
-        max-width: 320px;
-        z-index: 1000; /* Ganz weit vorne */
-        box-shadow: 5px 0 15px rgba(0,0,0,0.5); /* Schatten, damit es sich abhebt */
-    }
-
-    /* Wenn eingeklappt, schieben wir es komplett nach links raus */
-    .sidebar.collapsed {
-        margin-left: -100%; 
-    }
-
-    /* Der Button "Menü" soll immer sichtbar und gut klickbar sein */
-    .toggle-btn {
-        position: sticky;
-        top: 10px;
-        left: 10px;
-        z-index: 500;
-        background-color: #1e1e24; /* Hintergrund, damit man Text lesen kann */
-        border-radius: 4px;
-        margin-left: 0;
-        margin-top: 10px;
-    }
     
+    /* 1. Container fixieren */
+    .app-container {
+        display: block; /* Kein Flexbox mehr auf Handy */
+        position: relative;
+        overflow-x: hidden;
+    }
+
+    /* 2. Sidebar schweben lassen & Breite erzwingen */
+    .sidebar {
+        position: fixed; /* Schwebt über allem */
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 85% !important; /* Nur 85% des Bildschirms */
+        min-width: 0 !important; /* WICHTIG: Die 360px Regel killen! */
+        max-width: 300px;
+        z-index: 9999; /* Ganz nach vorne */
+        box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+        transition: transform 0.3s ease; /* Weiches Gleiten */
+        
+        /* Standardzustand auf Handy: Sichtbar (wird per JS zugeklappt) */
+        transform: translateX(0); 
+        margin-left: 0 !important; /* Margin-Logik vom Desktop deaktivieren */
+    }
+
+    /* 3. Wenn eingeklappt (Klasse .collapsed) */
+    .sidebar.collapsed {
+        transform: translateX(-100%); /* Nach links aus dem Bild schieben */
+        margin-left: 0 !important;
+    }
+
+    /* 4. Der Menü-Button muss immer sichtbar sein */
+    .toggle-btn {
+        position: fixed; /* Bleibt beim Scrollen stehen */
+        top: 15px;
+        right: 15px; /* Rechts oben ist auf Handys oft besser erreichbar */
+        z-index: 10000; /* Noch vor der Sidebar */
+        background-color: #1e1e24;
+        border: 2px solid #ea80fc;
+        border-radius: 50%; /* Rund machen */
+        width: 50px;
+        height: 50px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    /* 5. Inhalt nimmt vollen Platz */
     .content {
-        padding: 15px; /* Etwas weniger Abstand auf Handy */
-        width: 100%; /* Nutzt jetzt den vollen Platz */
+        width: 100%;
+        padding: 80px 15px 15px 15px; /* Oben Platz lassen für den Button */
     }
 }
