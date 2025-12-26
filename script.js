@@ -38,12 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const badmintonPresetBtn = document.getElementById('badmintonBtn');
     const startBadmintonBtn = document.getElementById('createBadmintonTable');
 
-    // 1. SIDEBAR TOGGLE
-    if(toggleBtn) {
-        toggleBtn.addEventListener('click', () => { sidebar.classList.toggle('collapsed'); });
-    }
-
-    // 2. AKKORDEON LOGIK
+    // 1. AKKORDEON LOGIK
     const acc = document.getElementsByClassName("accordion");
     for (let i = 0; i < acc.length; i++) {
         acc[i].addEventListener("click", function() {
@@ -57,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // 3. PRESET TABS
+    // 2. PRESET TABS
     function hideAllConfigs() {
         if(dartsConfig) dartsConfig.style.display = "none";
         if(minigolfConfig) minigolfConfig.style.display = "none";
@@ -85,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // 4. STATISTIK CHECKBOXEN (DARTS)
+    // 3. STATISTIK CHECKBOXEN (DARTS)
     function checkModus() { if(matchSettings) matchSettings.style.display = (modusSelect.value === '501do') ? 'block' : 'none'; }
     function checkStats() {
         if(advancedStatsCheckbox.checked) {
@@ -114,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // 5. STATISTIK CHECKBOXEN (MINIGOLF)
+    // 4. STATISTIK CHECKBOXEN (MINIGOLF)
     if(mgStatsCheckbox) {
         mgStatsCheckbox.addEventListener('change', function() {
             if(this.checked) {
@@ -182,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        // BADMINTON LOGIK
+        // B) BADMINTON LOGIK
         else if(meineTabelle.classList.contains('badminton-mode') && target.classList.contains('badminton-input')) {
             
             let row = target.parentElement.parentElement;
@@ -207,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
- // --- STANDARD TABELLE ENGINE ---
+    // --- STANDARD TABELLE ENGINE ---
     function standardTabelleErstellen() {
         meineTabelle.innerHTML = '';
         meineTabelle.classList.remove('darts-mode', 'minigolf-mode', 'badminton-mode');
@@ -217,21 +212,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
         let thead = meineTabelle.createTHead();
         let tr = thead.insertRow();
-        
-        // Header 1: Spieler Name
         let th = document.createElement('th');
         th.textContent = "SPIELER";
-        th.contentEditable = "true"; 
+        th.contentEditable = "true"; // EDITIERBAR
         tr.appendChild(th);
 
-        // Header 2: Die Spiele (Spalten)
         for(let i=1; i<=cols; i++) {
             let th = document.createElement('th'); 
             th.textContent = "SPIEL "+i; 
-            th.contentEditable = "true"; 
+            th.contentEditable = "true"; // EDITIERBAR
             tr.appendChild(th);
         }
-        
         let thGesamt = document.createElement('th');
         thGesamt.textContent = "GESAMT";
         tr.appendChild(thGesamt);
@@ -261,12 +252,10 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const headRow = thead.querySelector('tr');
         const numCols = headRow.cells.length;
-        
         // Neue Spalte VOR der "Gesamt"-Spalte einfügen
         const newTh = document.createElement('th');
         newTh.textContent = "SPIEL " + (numCols - 1);
-        newTh.contentEditable = "true"; // <--- AUCH HIER WICHTIG!
-        
+        newTh.contentEditable = "true"; // EDITIERBAR
         headRow.insertBefore(newTh, headRow.lastElementChild);
 
         tbody.querySelectorAll('tr').forEach(r => {
@@ -283,9 +272,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const tbody = meineTabelle.querySelector('tbody');
         if(!thead) return;
         const headRow = thead.querySelector('tr');
-        if(headRow.cells.length <= 2) return; // Nicht unter 1 Spielspalte gehen
+        if(headRow.cells.length <= 2) return; 
 
-        // Vorletzte Zelle löschen
         headRow.deleteCell(headRow.cells.length - 2);
         tbody.querySelectorAll('tr').forEach(r => {
             r.deleteCell(r.cells.length - 2);
@@ -298,7 +286,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const tbody = meineTabelle.querySelector('tbody');
         if(!tbody) return;
         
-        // Anzahl Spalten ermitteln (minus Name und Gesamt)
         const cols = meineTabelle.rows[0].cells.length - 2; 
         
         const r = tbody.insertRow();
@@ -325,7 +312,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     // --- BADMINTON ENGINE ---
-
     function initBadminton() {
         meineTabelle.innerHTML = '';
         meineTabelle.classList.remove('darts-mode', 'minigolf-mode');
@@ -654,30 +640,34 @@ document.addEventListener('DOMContentLoaded', function() {
         neueWurfZeile(tbody, sAnz);
         if(advancedStatsCheckbox.checked) updateHeaderStats(); 
     }
-  // --- MOBILE OPTIMIERUNGEN (Final Fix) ---
+
+    // --- MOBILE OPTIMIERUNGEN (Safety Version) ---
     
-    function checkMobileMenu() {
-        if(window.innerWidth <= 768) {
-            // Auf Handy: Klasse 'collapsed' hinzufügen, damit es zu ist
-            sidebar.classList.add('collapsed');
-        } else {
-            // Auf Desktop: Klasse entfernen, damit es offen ist
-            sidebar.classList.remove('collapsed');
-        }
-    }
-
-    // Beim Laden der Seite prüfen
-    checkMobileMenu();
-
-    // Funktion zum Schließen nach Klick (für die Buttons)
-    function autoCloseSidebarOnMobile() {
+    function closeMobileMenu() {
         if(window.innerWidth <= 768) {
             sidebar.classList.add('collapsed');
         }
     }
 
-    // Buttons verknüpfen
-    if(erstelleBtn) erstelleBtn.addEventListener('click', autoCloseSidebarOnMobile);
-    if(startDartsBtn) startDartsBtn.addEventListener('click', autoCloseSidebarOnMobile);
-    if(startMinigolfBtn) startMinigolfBtn.addEventListener('click', autoCloseSidebarOnMobile);
-    if(startBadmintonBtn) startBadmintonBtn.addEventListener('click', autoCloseSidebarOnMobile);
+    // Buttons verbinden 
+    if(erstelleBtn) erstelleBtn.addEventListener('click', closeMobileMenu);
+    if(startDartsBtn) startDartsBtn.addEventListener('click', closeMobileMenu);
+    if(startMinigolfBtn) startMinigolfBtn.addEventListener('click', closeMobileMenu);
+    if(startBadmintonBtn) startBadmintonBtn.addEventListener('click', closeMobileMenu);
+
+    // Initialer Check
+    if(window.innerWidth <= 768) {
+        sidebar.classList.add('collapsed');
+    }
+
+    // Menü-Button Logik
+    if(toggleBtn) {
+        const newBtn = toggleBtn.cloneNode(true);
+        toggleBtn.parentNode.replaceChild(newBtn, toggleBtn);
+        
+        newBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); 
+            sidebar.classList.toggle('collapsed');
+        });
+    }
+});

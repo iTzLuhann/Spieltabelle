@@ -1,3 +1,5 @@
+/* style.css - Complete Updated Version */
+
 body, html {
     margin: 0; padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -115,9 +117,11 @@ button:hover { background: #9c27b0; filter: brightness(1.1); }
 
 /* --- CONTENT AREA --- */
 .content { flex: 1; padding: 30px; overflow-y: auto; background-color: #282c34; }
+/* Standard Toggle Btn (Desktop) */
 .toggle-btn { 
     background: transparent; border: 2px solid #ea80fc; color: #ea80fc; 
     font-size: 1.2rem; margin-bottom: 20px; padding: 5px 15px; width: auto;
+    cursor: pointer;
 }
 .table-wrapper { display: flex; justify-content: center; margin-top: 20px; padding-bottom: 200px; }
 
@@ -161,7 +165,7 @@ td[contenteditable="true"]:focus, .wurf-zelle:focus {
     background-color: #4a148c;
     border-right: 2px solid #bd00ff;
 }
-/* Input Feldet (Regler) */
+/* Input Felder (Regler) */
 .badminton-input {
     width: 100%; height: 100%;
     background: transparent; 
@@ -181,62 +185,78 @@ td[contenteditable="true"]:focus, .wurf-zelle:focus {
 ::-webkit-scrollbar { width: 10px; }
 ::-webkit-scrollbar-track { background: #4a148c; }
 ::-webkit-scrollbar-thumb { background-color: #7b1fa2; border-radius: 5px; border: 2px solid #4a148c; }
-/* Responsive Design (Handy-Anpassung) */
-/* --- MOBILE REPARATUR --- */
+
+
+/* --- MOBILE REPARATUR (FINAL) --- */
 @media (max-width: 768px) {
     
-    /* 1. Container fixieren */
+    /* Container blockiert nichts */
     .app-container {
-        display: block; /* Kein Flexbox mehr auf Handy */
+        display: block;
         position: relative;
         overflow-x: hidden;
     }
 
-    /* 2. Sidebar schweben lassen & Breite erzwingen */
-    .sidebar {
-        position: fixed; /* Schwebt über allem */
-        top: 0;
-        left: 0;
-        height: 100vh;
-        width: 85% !important; /* Nur 85% des Bildschirms */
-        min-width: 0 !important; /* WICHTIG: Die 360px Regel killen! */
-        max-width: 300px;
-        z-index: 9999; /* Ganz nach vorne */
-        box-shadow: 5px 0 15px rgba(0,0,0,0.5);
-        transition: transform 0.3s ease; /* Weiches Gleiten */
-        
-        /* Standardzustand auf Handy: Sichtbar (wird per JS zugeklappt) */
-        transform: translateX(0); 
-        margin-left: 0 !important; /* Margin-Logik vom Desktop deaktivieren */
-    }
-
-    /* 3. Wenn eingeklappt (Klasse .collapsed) */
-    .sidebar.collapsed {
-        transform: translateX(-100%); /* Nach links aus dem Bild schieben */
-        margin-left: 0 !important;
-    }
-
-    /* 4. Der Menü-Button muss immer sichtbar sein */
+    /* Der Menü-Button: Fixiert rechts oben */
     .toggle-btn {
-        position: fixed; /* Bleibt beim Scrollen stehen */
+        position: fixed;
         top: 15px;
-        right: 15px; /* Rechts oben ist auf Handys oft besser erreichbar */
-        z-index: 10000; /* Noch vor der Sidebar */
-        background-color: #1e1e24;
-        border: 2px solid #ea80fc;
-        border-radius: 50%; /* Rund machen */
+        right: 15px;
+        z-index: 20000 !important; /* Muss höher sein als Sidebar */
+        background-color: #ea80fc; /* Auffällige Farbe */
+        color: #1e1e24;
+        border: 2px solid #ffffff;
+        border-radius: 50%;
         width: 50px;
         height: 50px;
+        font-size: 1.5rem;
         padding: 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        cursor: pointer;
+        margin: 0;
     }
 
-    /* 5. Inhalt nimmt vollen Platz */
+    /* Die Sidebar: Schwebt über allem */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 85% !important; /* Breite auf Handy */
+        min-width: 0 !important; /* Desktop-Regel überschreiben */
+        max-width: 320px;
+        z-index: 10000 !important; /* Sehr hoch, aber unter dem Button */
+        background-color: #4a148c;
+        box-shadow: 10px 0 30px rgba(0,0,0,0.8);
+        
+        /* Animation */
+        transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+        transform: translateX(0); /* Standard: Sichtbar */
+        
+        /* WICHTIG: Damit Klicks funktionieren */
+        pointer-events: auto; 
+        margin-left: 0 !important;
+    }
+
+    /* Wenn zugeklappt */
+    .sidebar.collapsed {
+        transform: translateX(-100%);
+        box-shadow: none;
+        margin-left: 0 !important;
+    }
+
+    /* Der Inhalt */
     .content {
         width: 100%;
-        padding: 80px 15px 15px 15px; /* Oben Platz lassen für den Button */
+        padding: 80px 15px 100px 15px; /* Platz für Button oben lassen */
+        pointer-events: auto;
+    }
+    
+    /* Macht Buttons auf Handy besser tippbar */
+    button, input, .accordion {
+        touch-action: manipulation;
     }
 }
