@@ -3,25 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabellenrechner</title>
+    <title>Tabellenrechner Ultimate</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-   <div><label for="spielerzahl">Wie viele Spieler?</label>
-   <input id="spielerzahl" type="number" min="2" max="20" maxlength="2">
-    </div>
+   <div class="app-container">
 
-   <div><label for="spielanzahl">Wie viele Spiele werden gespielt?</label>
-   <input id="spielanzahl" type="number" min="1" max="20" maxlength="2">
+    <aside class="sidebar" id="mySidebar">
+      <h2>Menü</h2>
+
+      <button class="accordion">Eigene Tabelle</button>
+      <div class="panel">
+          <div class="panel-content">
+              <div class="input-group">
+                <label>Spieleranzahl:</label>
+                <input id="spielerzahl" type="number" min="1" max="20" value="2">
+              </div>
+              <div class="input-group">
+                <label>Spiele/Runden:</label>
+                <input id="spielanzahl" type="number" min="1" max="50" value="5">
+              </div>
+              <button id="createTable" class="primary-btn">Tabelle erstellen</button>
+              
+              <hr class="divider">
+
+              <div class="button-group">
+                <div class="btn-stack">
+                    <button id="addspalte">Spalte +</button>
+                    <button id="removespalte" class="danger-btn">Spalte -</button>
+                </div>
+                <div class="btn-stack">
+                    <button id="addzeile">Zeile +</button>
+                    <button id="removezeile" class="danger-btn">Zeile -</button>
+                </div>
+              </div>
+          </div>
+      </div>
+
+      <button class="accordion">Presets</button>
+      <div class="panel">
+          <div class="panel-content">
+              
+              <div class="preset-wrapper">
+                  <div class="preset-grid">
+                    <button id="badmintonBtn">Badminton</button>
+                    <button id="dartsBtn">Darts</button>
+                    <button id="minigolfBtn">Minigolf</button>
+                  </div>
+              </div>
+
+              <div id="darts-config">
+                <h3>Darts Setup</h3>
+                
+                <div class="input-group">
+                  <label>Spieler / Teams:</label>
+                  <input id="darts-spielerzahl" type="number" min="1" max="8" value="2">
+                </div>
+
+                <div class="input-group">
+                    <label>Modus:</label>
+                    <select id="darts-modus">
+                        <option value="301">301</option>
+                        <option value="501" selected>501</option>
+                        <option value="501do">501 Double Out</option>
+                        <option value="701">701</option>
+                    </select>
+                </div>
+
+                <div id="match-settings">
+                    <div class="input-group">
+                        <label style="color:#00e676;">Legs für Satzgewinn:</label>
+                        <input id="legs-to-win" type="number" min="1" value="3">
+                    </div>
+                    <div class="input-group">
+                        <label style="color:#00e676;">Sätze für Match:</label>
+                        <input id="sets-to-win" type="number" min="1" value="1">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label style="display:flex; align-items:center; gap: 10px; cursor: pointer; margin-top: 10px;">
+                      <input id="advancedStats" type="checkbox"> Erweiterte Statistiken
+                    </label>
+                    
+                    <div id="stats-list" class="stats-list-container">
+                        <label class="select-all-label">
+                            <input type="checkbox" id="selectAllStats"> Alle auswählen
+                        </label>
+                        <label><input type="checkbox" class="stat-checkbox" value="avg"> Durchschnitt (3-Dart)</label>
+                        <label><input type="checkbox" class="stat-checkbox" value="highscore"> Höchster Wurf</label>
+                        <label><input type="checkbox" class="stat-checkbox" value="180s"> Anzahl 180er</label>
+                        <label><input type="checkbox" class="stat-checkbox" value="checkout"> Höchster Checkout</label>
+                        <label><input type="checkbox" class="stat-checkbox" value="missed"> Fehlwürfe (Bust)</label>
+                    </div>
+                </div>
+
+                <button id="createDartsTable" class="primary-btn">Spiel starten</button>
+              </div>
+
+            <div id="minigolf-config">
+              <h3>Minigolf Setup</h3>
+              <div class="input-group">
+                  <label>Anzahl Spieler:</label>
+                  <input id="minigolf-spielerzahl" type="number" min="1" max="8" value="2">
+              </div>
+              <div class="input-group">
+                  <label>Anzahl Bahnen:</label>
+                  <input id="minigolf-bahnanzahl" type="number" min="1" max="36" value="18">
+              </div>
+
+              <div class="input-group">
+                <label style="display:flex; align-items:center; gap: 10px; cursor: pointer; margin-top: 10px;">
+                  <input id="minigolfAdvancedStats" type="checkbox"> Erweiterte Statistiken
+                </label>
+                
+                <div id="minigolf-stats-list" class="stats-list-container">
+                    <label class="select-all-label">
+                        <input type="checkbox" id="minigolfSelectAll"> Alle auswählen
+                    </label>
+                    <label><input type="checkbox" class="mg-stat-checkbox" value="avg"> Durchschnitt (Ø)</label>
+                    <label><input type="checkbox" class="mg-stat-checkbox" value="hio"> Hole-in-Ones</label>
+                    <label><input type="checkbox" class="mg-stat-checkbox" value="best"> Bester Schlag</label>
+                </div>
+              </div>
+
+              <button id="createMinigolfTable" class="primary-btn">Tabelle erstellen</button>
+            </div>
+
+            <div id="badminton-config">
+                <h3>Badminton Setup</h3>
+                <div class="input-group">
+                    <label>Anzahl Spieler / Teams:</label>
+                    <input id="badminton-spielerzahl" type="number" min="1" max="8" value="2">
+                </div>
+                <div class="input-group">
+                    <label>Sätze für den Sieg (Best of):</label>
+                    <input id="badminton-saetze" type="number" min="1" max="5" value="2">
+                </div>
+                <button id="createBadmintonTable" class="primary-btn">Tabelle erstellen</button>
+            </div>
+
+          </div> </div> </aside>
+
+    <main class="content">
+      <button id="toggleBtn" class="toggle-btn">☰ Menü</button>
+      <h1>Spielstand</h1>
+      <div class="table-wrapper">
+        <table id="tableContainer"></table>
+      </div>
+    </main>
+
    </div>
-
-   <div><button id="createTable">Tabelle erstellen</button></div>
-   <table id="tableContainer"></table>
-
-   <div><button id="addspalte">Spalte hinzufügen +</button></div>
-
-   <div><button id="addzeile">Zeile hinzufügen +</button></div>
-
   <script src="script.js"></script>
 </body>
 </html>

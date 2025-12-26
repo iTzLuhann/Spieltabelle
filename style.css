@@ -1,92 +1,187 @@
-/* Globale Stile und Hintergrund */
-body {
-    background-color: #2F3640; /* Anthrazit-Farbton */
-    color: #f4f4f4; /* Helle Textfarbe für guten Kontrast */
-    font-family: sans-serif;
-    padding: 20px;
-}
-
-/* Stil für die Eingabefelder und den Button */
-div, button {
-    margin-bottom: 15px; /* Etwas Abstand zwischen den Elementen */
-}
-
-input[type="number"], button {
-    background-color: #353b48; /* Etwas helleres Anthrazit */
-    color: #f4f4f4;
-    border: 1px solid #ff00ff; /* Neon-Magenta-Rand */
-    padding: 8px;
-    border-radius: 5px; /* Leicht abgerundete Ecken */
-}
-
-button {
-    cursor: pointer; /* Zeigt an, dass der Button klickbar ist */
-    font-weight: bold;
-}
-
-button:hover {
-    background-color: #ff00ff; /* Magenta-Hintergrund beim Darüberfahren */
-    color: #2F3640; /* Dunkler Text beim Hover */
-}
-
-/* Stil für die Tabelle */
-table {
-    width: 100%;
-    border-collapse: separate; /* Wichtig für abgerundete Ecken */
-    border-spacing: 0;
-    margin-top: 20px;
-    border: 3px solid #ff00ff; /* Dicker Neon-Magenta-Rahmen */
-    border-radius: 15px; /* Abgerundete Ecken für die gesamte Tabelle */
-    overflow: hidden; /* Stellt sicher, dass die Ecken der Zellen nicht über den Rahmen hinausragen */
-}
-
-/* Stil für Kopf- und Datenzellen */
-th, td {
-    padding: 12px;
-    text-align: center;
-    border-bottom: 1px solid #8c008c; /* Dunkleres Magenta für die Trennlinien */
-    border-right: 1px solid #8c008c;
-}
-
-/* Entfernt den überflüssigen rechten Rand bei der letzten Spalte */
-th:last-child,
-td:last-child {
-    border-right: none;
-}
-
-/* Entfernt den überflüssigen unteren Rand bei der letzten Zeile */
-tr:last-child td {
-    border-bottom: none;
-}
-
-/* Stil für die dicken Kopfzellen */
-th {
-    background-color: #530053; /* Dunkler Magenta-Ton für den Kopf */
+body, html {
+    margin: 0; padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100%; box-sizing: border-box;
+    background-color: #1e1e24;
     color: #ffffff;
+    overflow: hidden; 
+}
+
+.app-container { display: flex; height: 100vh; width: 100%; }
+
+/* --- SIDEBAR --- */
+.sidebar {
+    width: 360px; min-width: 360px;
+    background-color: #4a148c; 
+    height: 100%;
+    display: block; 
+    overflow-y: auto; 
+    padding: 20px;
+    padding-bottom: 200px;
+    border-right: 2px solid #7c43bd;
+    transition: margin-left 0.3s ease;
+    box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: #7b1fa2 #4a148c;
+}
+.sidebar.collapsed { margin-left: -360px; } 
+.sidebar h2 { margin-top: 0; margin-bottom: 20px; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
+
+/* --- BUTTONS & INPUTS --- */
+.input-group { display: flex; flex-direction: column; margin-bottom: 15px; }
+.input-group label { margin-bottom: 5px; color: #e1bee7; font-size: 0.9em; }
+.input-group input, .input-group select {
+    padding: 10px; border: none; border-radius: 4px;
+    background: #f3e5f5; color: #4a148c; font-weight: bold;
+}
+button {
+    padding: 12px; cursor: pointer; border-radius: 4px;
+    background: #7b1fa2; color: white; border: 1px solid #9c27b0;
+    font-weight: bold; margin-bottom: 5px;
+}
+button:hover { background: #9c27b0; filter: brightness(1.1); }
+.primary-btn { 
+    background: #d500f9; width: 100%; margin-top: 15px; 
+    padding: 15px; font-size: 1.1em; border: none;
+    box-shadow: 0 4px 0px #aa00ff; 
+}
+.primary-btn:active { transform: translateY(2px); box-shadow: none; }
+.danger-btn { background: #c62828; border-color: #b71c1c; }
+.button-group { display: flex; gap: 10px; margin-top: 10px; }
+.btn-stack { display: flex; flex-direction: column; gap: 5px; flex: 1; }
+.divider { border: 0; border-top: 1px solid #7b1fa2; margin: 20px 0; }
+
+/* --- PRESETS & CONFIG --- */
+.preset-wrapper { padding: 5px 0; }
+.preset-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.preset-grid button { width: 100%; }
+
+/* Config Bereiche (Standardmäßig ausgeblendet) */
+#darts-config, #minigolf-config, #badminton-config { 
+    display: none; 
+    margin-top: 20px; 
+    border-top: 1px solid #aaa; 
+    padding-top: 20px; 
+}
+#match-settings { 
+    display: none; 
+    background: rgba(0,0,0,0.2); 
+    padding: 10px; border-radius: 4px; 
+    margin-bottom: 15px; border-left: 4px solid #00e676; 
+}
+
+/* STATISTIK BOX */
+.stats-list-container {
+    display: none; flex-direction: column;
+    background: #38006b; margin-top: 10px;
+    border-radius: 4px; padding: 5px; border: 1px solid #7b1fa2;
+    max-height: 180px; 
+    overflow-y: auto;  
+    scrollbar-width: thin;
+    scrollbar-color: #bd00ff #38006b;
+}
+.stats-list-container label {
+    padding: 10px; border-bottom: 1px solid #4a148c; cursor: pointer;
+    display: flex; align-items: center; gap: 10px;
+}
+.stats-list-container label:hover { background-color: #4a148c; }
+.select-all-label {
     font-weight: bold;
+    border-bottom: 2px solid #bd00ff !important;
+    background-color: rgba(74, 20, 140, 0.8) !important;
+    position: sticky; top: 0; 
+    z-index: 2;
 }
 
-/* --- NEUE STILE FÜR FUNKTIONEN --- */
+/* --- AKKORDEON --- */
+.accordion {
+    background-color: #6a1b9a; color: white;
+    padding: 15px; width: 100%; text-align: left;
+    border: none; outline: none; transition: 0.4s;
+    font-size: 1.1em; border-radius: 4px;
+    margin-bottom: 5px;
+}
+.active, .accordion:hover { background-color: #8e24aa; }
+.panel {
+    background-color: transparent;
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+.panel.open {
+    max-height: none !important;
+    overflow: visible !important;
+}
+.panel-content { padding: 15px 5px; } 
 
-/* Hervorhebung der "Gesamt"-Spalte */
-.gesamt-zelle {
+/* --- CONTENT AREA --- */
+.content { flex: 1; padding: 30px; overflow-y: auto; background-color: #282c34; }
+.toggle-btn { 
+    background: transparent; border: 2px solid #ea80fc; color: #ea80fc; 
+    font-size: 1.2rem; margin-bottom: 20px; padding: 5px 15px; width: auto;
+}
+.table-wrapper { display: flex; justify-content: center; margin-top: 20px; padding-bottom: 200px; }
+
+/* --- TABELLEN DESIGN --- */
+table { 
+    width: 100%; max-width: 1100px; 
+    border-collapse: collapse; 
+    background: #1e1e24; 
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+th { 
+    background-color: #4a148c; color: white;
+    text-transform: uppercase; padding: 15px;
+    border: 1px solid #bd00ff; font-size: 1.1em; letter-spacing: 1px;
+}
+td { 
+    border: 1px solid #bd00ff; padding: 12px; text-align: center; 
+    background-color: #2d2d35; color: white; font-size: 1.1em;
+}
+td[contenteditable="true"]:focus, .wurf-zelle:focus {
+    background-color: #4a4a5e; outline: 2px solid #00e676;
+}
+.wurf-zelle { height: 40px; font-weight: bold; }
+.gesamt-zelle { background-color: #4a148c; font-weight: bold; font-size: 1.2em; }
+.rest-big { font-size: 1.6em; font-weight: bold; color: #ea80fc; display: block; }
+.last-throw { font-size: 0.9em; color: #aaa; }
+
+/* --- MINIGOLF CSS --- */
+.minigolf-mode tbody th{
+    width: 100px;
+    border-right: 2px; solid #bd00ff;
+    background-color: #4a148c;
+}
+.minigolf-mode .stp:focus{
+    background-color: #5e35b1;
+}
+
+/* --- BADMINTON CSS --- */
+.badminton-mode tbody th {
+    width: 80px;
+    background-color: #4a148c;
+    border-right: 2px solid #bd00ff;
+}
+/* Input Feldet (Regler) */
+.badminton-input {
+    width: 100%; height: 100%;
+    background: transparent; 
+    color: white; 
+    border: none; 
+    text-align: center;
+    font-size: 1.4em; 
     font-weight: bold;
-    background-color: #3f003f; /* Leicht abweichender Magenta-Ton */
-    color: #f4f4f4;
+    font-family: inherit;
+    outline: none; 
+}
+.badminton-input:focus {
+    background-color: #4a4a5e; border-radius: 4px;
 }
 
-/* Visuelles Feedback für editierbare Zellen */
-[contentEditable="true"] {
-    cursor: text;
-    transition: background-color 0.2s ease; /* Sanfter Übergang */
-}
-
-[contentEditable="true"]:hover {
-    background-color: #4a505a; /* Hellerer Hintergrund beim Hovern */
-}
-
-[contentEditable="true"]:focus {
-    background-color: #5a606a; /* Hellerer Hintergrund beim Bearbeiten */
-    outline: 2px solid #ff00ff; /* Neon-Fokus-Rahmen */
-    outline-offset: -2px; /* Rahmen nach innen */
+/* Scrollbar Styles */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #4a148c; }
+::-webkit-scrollbar-thumb { background-color: #7b1fa2; border-radius: 5px; border: 2px solid #4a148c; }
+@media (max-width: 768px) {
+    .sidebar { width: 280px; min-width: 280px; }
+    .sidebar.collapsed { margin-left: -280px; }
 }
